@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Store from "../../store";
-import { getCurrencyBalance, sell, update_auth } from "./helper";
+import { getCurrencyBalance, sell, update_auth,buy } from "./helper";
 import { withScatter, eosNetwork } from "../scatter";
 
 const commonStatus = {
@@ -53,8 +53,12 @@ class Logined extends Component {
     }
 
     async buy() {
-        const symbol = prompt('What do you want to buy?')
-        const amount = prompt(`How much ${symbol} do you want to buy?`)
+        const { store } = this.props
+        const target = prompt(`How much do you want to buy?`)
+        const total_eos = prompt(`To exchange how much EOS?`)
+        const account_name = store.get('id').name
+        const scatter = store.get('scatter')
+        buy({ account_name, target, total_eos, scatter })
     }
     async sell() {
         const { store } = this.props

@@ -58,3 +58,14 @@ export async function sell({ account_name, target, total_eos, scatter }) {
         throw new Error(error)
     }
 }
+export async function buy({ account_name, target, total_eos, scatter }) {
+    try {
+        const eos = scatter.eos(network, Eos, {})
+        const contract = await eos.contract("pomelo", { requiredFields })
+        contract.buy(account_name, target, total_eos, {
+            authorization: [`${account_name}@active`]
+        })
+    } catch (error) {
+        throw new Error(error)
+    }
+}
